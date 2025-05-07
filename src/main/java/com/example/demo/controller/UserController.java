@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.serviceImpl.UserServiceImpl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +43,10 @@ public class UserController {
 	public User deleteUser(@PathVariable String id)
 	{
 		return userService.deleteUser(id);
+	}
+	@ExceptionHandler(UserNotFoundException.class)
+	public String handleUserNotFoundException(UserNotFoundException ex)
+	{
+		return "Please provide correct user ID :";
 	}
 }
