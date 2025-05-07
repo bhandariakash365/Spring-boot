@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.UserService;
 
 @Service
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	public List<User> getAllUsers(){
 		return a1;
 	}
-
+ 
 	public User updateUser(String id,User user) {
 		
 		for(User u:a1)
@@ -34,10 +35,11 @@ public class UserServiceImpl implements UserService{
 				return u;
 			}
 		}
-		return null;
+		throw new UserNotFoundException("Incorrect id");
 	}
+	@Override
 	public User deleteUser(String id) {
-		
+		 
 		for(User u:a1)
 		{
 			if(u.getId().equals(id))
@@ -46,6 +48,6 @@ public class UserServiceImpl implements UserService{
 				return u;
 			}
 		}
-		return null;
+		throw new UserNotFoundException("Incorrect id");
 	}
 }
