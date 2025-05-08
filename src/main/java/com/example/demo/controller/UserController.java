@@ -6,6 +6,8 @@ import com.example.demo.serviceImpl.UserServiceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +26,16 @@ public class UserController {
 	private UserServiceImpl userService;
 	
 	@PostMapping("/register")
-	public User createUser(@RequestBody User user)  
+	public ResponseEntity<User> createUser(@RequestBody User user)  
 	{
-		return userService.createUser(user);
+		user = userService.createUser(user);
+		return new  ResponseEntity<User>(user,HttpStatus.ACCEPTED);
 	}
 	@GetMapping("/all")
 	public List<User> getAllUsers()
 	{
 		return userService.getAllUsers();
 	}
-	
 	@PutMapping("/update/{id}")
 	public User updateUser(@PathVariable String id,@RequestBody User user)
 	{
